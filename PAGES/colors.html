@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Cores</title>
+        <link rel="stylesheet" href="/CSS/colors.css" />
+    </head>
+    <body>
+        <header>
+            <a href="/index.html" class="logo"><h1>Sorteio Online</h1></a>
+            <nav>
+                <a href="/PAGES/colors.html">Cores</a>
+                <a href="/PAGES/names.html">Nomes</a>
+                <a href="/PAGES/numbers.html">Números</a>
+                <!-- <a href="/PAGES/teams.html">Equipes</a> -->
+            </nav>
+        </header>
+
+        <!-- Anúncio acima do sorteador -->
+        <div class="ad-container top">
+            <!-- Código do AdSense acima -->
+            <script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+            ></script>
+            <ins
+                class="adsbygoogle"
+                style="display: block"
+                data-ad-client="ca-pub-XXXXXX"
+                data-ad-slot="XXXXXX"
+                data-ad-format="auto"
+            ></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <main>
+            <div class="container">
+                <h1><span>Sorteio</span> de <span>Cores</span></h1>
+                <h2>Clique no Botão abaixo!</h2>
+                <button id="spin-button">Sortear Cor</button>
+                <div id="color-box"></div>
+                <div id="color-result"></div>
+            </div>
+        </main>
+
+        <!-- Anúncio abaixo do sorteador -->
+        <div class="ad-container bottom">
+            <!-- Código do AdSense abaixo -->
+            <script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+            ></script>
+            <ins
+                class="adsbygoogle"
+                style="display: block"
+                data-ad-client="ca-pub-XXXXXX"
+                data-ad-slot="XXXXXX"
+                data-ad-format="auto"
+            ></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <!-- Anúncio na lateral esquerda -->
+        <div class="ad-container left">
+            <!-- Código do AdSense lateral esquerda -->
+            <script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+            ></script>
+            <ins
+                class="adsbygoogle"
+                style="display: block"
+                data-ad-client="ca-pub-XXXXXX"
+                data-ad-slot="XXXXXX"
+                data-ad-format="auto"
+            ></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <!-- Anúncio na lateral direita -->
+        <div class="ad-container right">
+            <!-- Código do AdSense lateral direita -->
+            <script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+            ></script>
+            <ins
+                class="adsbygoogle"
+                style="display: block"
+                data-ad-client="ca-pub-XXXXXX"
+                data-ad-slot="XXXXXX"
+                data-ad-format="auto"
+            ></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <script>
+            const colors = [
+                '#02c39a',
+                '#ffea00',
+                '#6c757d',
+                '#edc4b3',
+                '#0d00a4',
+                '#ffffff',
+                '#000000',
+                '#c1121f',
+                '#f49cbb',
+                '#5a189a',
+                '#eb5e28',
+                '#473335',
+            ];
+            const colorNames = [
+                'Verde',
+                'Amarelo',
+                'Cinza',
+                'Cor de Pele',
+                'Azul',
+                'Branco',
+                'Preto',
+                'Vermelho',
+                'Rosa',
+                'Roxo',
+                'Laranja',
+                'Marron',
+            ];
+
+            const colorBox = document.getElementById('color-box');
+            const spinButton = document.getElementById('spin-button');
+            const colorResult = document.getElementById('color-result');
+
+            spinButton.addEventListener('click', () => {
+                let spins = 10 + Math.floor(Math.random() * 15);
+                let index = 0;
+                let delay = 50;
+
+                function spin() {
+                    if (spins > 0) {
+                        colorBox.style.backgroundColor = colors[index];
+                        colorBox.textContent = '';
+                        index = (index + 1) % colors.length;
+                        spins--;
+                        delay += 30;
+                        setTimeout(spin, delay);
+                    } else {
+                        let finalIndex = index;
+                        let finalColor = colors[finalIndex];
+                        let finalColorName = colorNames[finalIndex];
+                        colorBox.style.backgroundColor = finalColor;
+                        colorResult.style.display = 'block';
+                        colorResult.style.backgroundColor = finalColor;
+                        colorResult.textContent = finalColorName;
+                        colorResult.style.color =
+                            getReadableTextColor(finalColor);
+                    }
+                }
+                spin();
+            });
+
+            function getReadableTextColor(bgColor) {
+                let r = parseInt(bgColor.substr(1, 2), 16);
+                let g = parseInt(bgColor.substr(3, 2), 16);
+                let b = parseInt(bgColor.substr(5, 2), 16);
+                let brightness = (r * 299 + g * 587 + b * 114) / 1000;
+                return brightness > 125 ? '#000' : '#FFF';
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,336 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #1b263b;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #0d1b2a;
+}
+
+header .logo {
+    color: #eb5e28;
+    font-size: 25px;
+    text-decoration: none;
+    transition: 0.3s ease-in-out;
+}
+
+header .logo:hover {
+    transform: scale(1.03);
+}
+
+header nav a {
+    padding: 0.5rem 1rem;
+    margin-left: 1rem;
+    text-decoration: none;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 7px;
+    transition: 0.3s ease-in-out;
+}
+
+header nav a:hover {
+    box-shadow: 0px 0px 8px #fff;
+    color: #eb5e28;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+main .container {
+    display: flex;
+    max-width: 70%;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: #e0e1dd;
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 2rem;
+    letter-spacing: 1.5px;
+    background: #0d1b2a;
+    box-shadow: 0px 0px 18px #e0e1dd;
+    padding: 2rem 3rem 3rem 3rem;
+    border-radius: 15px;
+}
+
+main .container label {
+    font-size: 25px;
+    margin-top: 1.5rem;
+}
+
+main .container input {
+    border: none;
+    border-radius: 7px;
+    height: 2rem;
+    width: 20%;
+    padding-left: 1rem;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0.7rem 0;
+    background: #1b263b;
+    box-shadow: 0px 0px 7px #e0e1dd;
+    color: #eb5e28;
+    font-weight: 600;
+}
+
+main .container input:hover {
+    background: #fff;
+    box-shadow: 0px 0px 12px #fff;
+    border: 1px solid #0d1b2a;
+}
+
+main .container #name-input {
+    width: 40%;
+    padding-left: 0.3rem;
+}
+
+main .container input::placeholder {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #e0e1dd1f;
+}
+
+button {
+    width: 40%;
+    height: 2.5rem;
+    font-size: 18px;
+    border-radius: 7px;
+    border: none;
+    margin-top: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0px 0px 7px #000;
+    background: #eb5e28;
+    color: #fff;
+    letter-spacing: 1.5px;
+    transition: 0.3s ease-in-out;
+}
+
+button:hover {
+    background: #1d3557;
+    color: #fff;
+    box-shadow: 0px 0px 10px #e0e1dd;
+    transform: translateY(-5px);
+}
+
+main h1 {
+    font-size: 40px;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    border-radius: 15px;
+    background: #ccc;
+    padding: 0.5rem 2rem;
+    box-shadow: 3px 3px 2px #eb5f288c;
+    text-shadow: 0px 2px 3px #0d1b2a;
+    transition: 0.3s ease-in-out;
+}
+
+main p {
+    font-size: 22px;
+    color: #fff;
+    margin-bottom: 2rem;
+}
+
+main span {
+    color: #eb5e28;
+}
+
+main ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main ul li {
+    padding: 1rem;
+    margin: 2rem 1rem;
+    list-style-type: none;
+}
+
+main ul li a {
+    color: #1b263b;
+    font-size: 25px;
+    font-weight: 600;
+    text-decoration: none;
+    background: #e0e1dd;
+    border-radius: 10px;
+    padding: 2rem;
+    transition: 0.3s ease-in-out;
+}
+
+main ul li a:hover {
+    background: transparent;
+    color: #eb5e28;
+    box-shadow: 0px 0px 10px #fff;
+}
+
+/* Estilização do Sorteio das Equipes */
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000000bb;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    /* clip-path: inset(0 0 30% 0); */
+}
+
+#color-selection {
+    display: grid;
+    grid-template-columns: repeat(4, 8rem);
+    grid-auto-rows: 8rem;
+}
+
+#color-selection .color-btn {
+    margin-left: auto;
+    margin-right: auto;
+    height: 5rem;
+    width: 5rem;
+}
+
+#name-list {
+    display: grid;
+    gap: 10px;
+    margin-top: 20px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#team-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    padding: 20px;
+    /* background: white; */
+    border-radius: 10px;
+    max-width: 80%;
+    margin: auto;
+}
+
+.name-item,
+.team-item {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    background-color: #ffffff;
+    color: #eb5e28;
+    width: 130px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.team {
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: white;
+    margin-top: 10px;
+}
+
+#team-name {
+    width: 80%;
+    padding-left: 0.3rem;
+}
+
+#participant-name {
+    width: 50%;
+    padding-left: 0.3rem;
+}
+
+#participant-list {
+    display: grid;
+    gap: 10px;
+    margin-top: 20px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.participant-item {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    background-color: #ffffff;
+    color: #eb5e28;
+    width: 130px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#countdown-container {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #d9534f;
+    margin-top: 20px;
+}
+
+#result-container {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+#result-name {
+    font-size: 3rem;
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    animation: grow 1s ease-in-out forwards;
+}
+
+#new-draw-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none;
+}
+
+@keyframes grow {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(2);
+    }
+}

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Números</title>
+        <link rel="stylesheet" href="/CSS/numbers.css" />
+    </head>
+    <body>
+        <header>
+            <a href="/index.html" class="logo"><h1>Sorteio Online</h1></a>
+            <nav>
+                <a href="/PAGES/colors.html">Cores</a>
+                <a href="/PAGES/names.html">Nomes</a>
+                <a href="/PAGES/numbers.html">Números</a>
+                <!-- <a href="/PAGES/teams.html">Equipes</a> -->
+            </nav>
+        </header>
+
+        <!-- Anúncio acima do sorteador -->
+        <div class="ad-container top">
+            <!-- Código do AdSense acima -->
+            <script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+            ></script>
+            <ins
+                class="adsbygoogle"
+                style="display: block"
+                data-ad-client="ca-pub-XXXXXX"
+                data-ad-slot="XXXXXX"
+                data-ad-format="auto"
+            ></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <main>
+            <div class="container">
+                <h1><span>Sorteio</span> de <span>Números</span></h1>
+                <label for="quantity">Quantos números deseja sortear?</label>
+                <input
+                    type="number"
+                    id="quantity"
+                    min="1"
+                    max="10000"
+                    placeholder="1"
+                />
+
+                <label for="min">Menor Número:</label>
+                <input
+                    type="number"
+                    id="min"
+                    min="1"
+                    max="10000"
+                    placeholder="1"
+                />
+
+                <label for="max">Maior Número:</label>
+                <input
+                    type="number"
+                    id="max"
+                    min="1"
+                    max="10000"
+                    placeholder="10000"
+                />
+
+                <button onclick="startDraw()">Iniciar Sorteio</button>
+                <div id="countdown-container">
+                    <h2 id="countdown-message">Começando em 5 segundos...</h2>
+                    <div id="countdown-circle">5</div>
+                </div>
+                <div id="result" style="display: none"></div>
+            </div>
+        </main>
+
+        <!-- Anúncio abaixo do sorteador -->
+        <div class="ad-container bottom">
+            <!-- Código do AdSense abaixo -->
+            <script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+            ></script>
+            <ins
+                class="adsbygoogle"
+                style="display: block"
+                data-ad-client="ca-pub-XXXXXX"
+                data-ad-slot="XXXXXX"
+                data-ad-format="auto"
+            ></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <!-- Anúncio na lateral esquerda -->
+        <div class="ad-container left">
+            <!-- Código do AdSense lateral esquerda -->
+            <script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+            ></script>
+            <ins
+                class="adsbygoogle"
+                style="display: block"
+                data-ad-client="ca-pub-XXXXXX"
+                data-ad-slot="XXXXXX"
+                data-ad-format="auto"
+            ></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <!-- Anúncio na lateral direita -->
+        <div class="ad-container right">
+            <!-- Código do AdSense lateral direita -->
+            <script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+            ></script>
+            <ins
+                class="adsbygoogle"
+                style="display: block"
+                data-ad-client="ca-pub-XXXXXX"
+                data-ad-slot="XXXXXX"
+                data-ad-format="auto"
+            ></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <script>
+            function startDraw() {
+                let quantity = parseInt(
+                    document.getElementById('quantity').value
+                );
+                let min = parseInt(document.getElementById('min').value);
+                let max = parseInt(document.getElementById('max').value);
+                let countdownMessage =
+                    document.getElementById('countdown-message');
+                let countdownCircle =
+                    document.getElementById('countdown-circle');
+                let resultElement = document.getElementById('result');
+                let countdownContainer = document.getElementById(
+                    'countdown-container'
+                );
+
+                if (min >= max) {
+                    alert(
+                        'O número mínimo deve ser menor que o número máximo.'
+                    );
+                    return;
+                }
+
+                let availableNumbers = Array.from(
+                    { length: max - min + 1 },
+                    (_, i) => i + min
+                );
+
+                if (quantity > availableNumbers.length) {
+                    alert(
+                        'A quantidade de números a sortear não pode ser maior que o intervalo escolhido.'
+                    );
+                    return;
+                }
+
+                countdownContainer.style.display = 'flex';
+                resultElement.innerHTML = '';
+                resultElement.style.display = 'none';
+
+                let countdown = 5;
+                countdownCircle.innerText = countdown;
+                let countdownInterval = setInterval(() => {
+                    countdown--;
+                    countdownCircle.innerText = countdown;
+                    if (countdown < 0) {
+                        clearInterval(countdownInterval);
+                        countdownContainer.style.display = 'none';
+                        resultElement.style.display = 'grid';
+                        setTimeout(() => {
+                            drawNumbers(
+                                quantity,
+                                availableNumbers,
+                                resultElement
+                            );
+                        }, 500);
+                    }
+                }, 1000);
+            }
+
+            function drawNumbers(quantity, availableNumbers, resultElement) {
+                let count = 0;
+                resultElement.innerHTML = '';
+
+                let drawInterval = setInterval(() => {
+                    if (count < quantity && availableNumbers.length > 0) {
+                        let randomIndex = Math.floor(
+                            Math.random() * availableNumbers.length
+                        );
+                        let number = availableNumbers.splice(randomIndex, 1)[0];
+
+                        let span = document.createElement('span');
+                        span.classList.add('drawn-item');
+                        span.innerText = number;
+                        resultElement.appendChild(span);
+                        count++;
+                    } else {
+                        clearInterval(drawInterval);
+                    }
+                }, 1000);
+            }
+        </script>
+    </body>
+</html>

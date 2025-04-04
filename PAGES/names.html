@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Nomes</title>
+        <link rel="stylesheet" href="/CSS/names.css" />
+    </head>
+    <body>
+        <header>
+            <a href="/index.html" class="logo"><h1>Sorteio Online</h1></a>
+            <nav>
+                <a href="/PAGES/colors.html">Cores</a>
+                <a href="/PAGES/names.html">Nomes</a>
+                <a href="/PAGES/numbers.html">Números</a>
+                <!-- <a href="/PAGES/teams.html">Equipes</a> -->
+            </nav>
+        </header>
+
+        <!-- Anúncio acima do sorteador -->
+        <div class="ad-container top">
+            <!-- Código do AdSense acima -->
+            <script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+            ></script>
+            <ins
+                class="adsbygoogle"
+                style="display: block"
+                data-ad-client="ca-pub-XXXXXX"
+                data-ad-slot="XXXXXX"
+                data-ad-format="auto"
+            ></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <main>
+            <div class="container">
+                <h1><span>Sorteio</span> de <span>Nomes</span></h1>
+                <label for="name-quantity">Quantos nomes deseja incluir?</label>
+                <input
+                    type="number"
+                    id="name-quantity"
+                    min="1"
+                    max="100"
+                    placeholder="1"
+                />
+
+                <label for="name-input"
+                    >Digite um nome e pressione Enter ou clique em "Adicionar
+                    Nome":</label
+                >
+                <input
+                    type="text"
+                    id="name-input"
+                    placeholder="Digite um nome"
+                />
+                <button id="add-name-btn">Adicionar Nome</button>
+
+                <div id="name-list"></div>
+
+                <button id="draw-btn" onclick="startDrawAnimation()">
+                    Sortear Nome
+                </button>
+
+                <div id="countdown-container"></div>
+
+                <div id="overlay"></div>
+
+                <div id="result-container">
+                    <div id="result-name"></div>
+                    <button id="new-draw-btn" onclick="resetDraw()">
+                        Novo Sorteio
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Anúncio abaixo do sorteador -->
+        <div class="ad-container bottom">
+            <!-- Código do AdSense abaixo -->
+            <script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+            ></script>
+            <ins
+                class="adsbygoogle"
+                style="display: block"
+                data-ad-client="ca-pub-XXXXXX"
+                data-ad-slot="XXXXXX"
+                data-ad-format="auto"
+            ></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <!-- Anúncio na lateral esquerda -->
+        <div class="ad-container left">
+            <!-- Código do AdSense lateral esquerda -->
+            <script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+            ></script>
+            <ins
+                class="adsbygoogle"
+                style="display: block"
+                data-ad-client="ca-pub-XXXXXX"
+                data-ad-slot="XXXXXX"
+                data-ad-format="auto"
+            ></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <!-- Anúncio na lateral direita -->
+        <div class="ad-container right">
+            <!-- Código do AdSense lateral direita -->
+            <script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+            ></script>
+            <ins
+                class="adsbygoogle"
+                style="display: block"
+                data-ad-client="ca-pub-XXXXXX"
+                data-ad-slot="XXXXXX"
+                data-ad-format="auto"
+            ></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <script>
+            let names = [];
+
+            document
+                .getElementById('name-input')
+                .addEventListener('keypress', function (event) {
+                    if (event.key === 'Enter') {
+                        event.preventDefault();
+                        addName();
+                    }
+                });
+
+            // Adicionando a funcionalidade para o botão
+            document
+                .getElementById('add-name-btn')
+                .addEventListener('click', addName);
+
+            function addName() {
+                let input = document.getElementById('name-input');
+                let name = input.value.trim();
+                let nameQuantity = parseInt(
+                    document.getElementById('name-quantity').value
+                );
+
+                if (names.length >= nameQuantity) {
+                    alert('Você já adicionou o número máximo de nomes!');
+                    return;
+                }
+
+                if (name !== '') {
+                    names.push(name);
+                    let nameItem = document.createElement('div');
+                    nameItem.classList.add('name-item');
+                    nameItem.innerText = name;
+                    document.getElementById('name-list').appendChild(nameItem);
+                    input.value = '';
+                }
+            }
+
+            function startDrawAnimation() {
+                let nameQuantity = parseInt(
+                    document.getElementById('name-quantity').value
+                );
+                if (names.length < nameQuantity) {
+                    alert('Adicione todos os nomes antes de sortear!');
+                    return;
+                }
+
+                document.getElementById('overlay').style.display = 'flex';
+
+                let interval = 50;
+                let iterations = 0;
+                let maxIterations = 50;
+                let intervalId = setInterval(() => {
+                    let randomIndex = Math.floor(Math.random() * names.length);
+                    document
+                        .querySelectorAll('.name-item')
+                        .forEach((item, index) => {
+                            if (index === randomIndex) {
+                                item.style.backgroundColor = '#eb5e28';
+                                item.style.color = '#FFFFFF';
+                            } else {
+                                item.style.backgroundColor = '#FFFFFF';
+                                item.style.color = '#eb5e28';
+                            }
+                        });
+
+                    iterations++;
+                    if (iterations > maxIterations) {
+                        clearInterval(intervalId);
+                        finalizeDraw(randomIndex);
+                    }
+                    interval += 30;
+                }, interval);
+            }
+
+            function finalizeDraw(selectedIndex) {
+                let selectedName = names[selectedIndex];
+                let resultElement = document.getElementById('result-name');
+                resultElement.innerText = selectedName;
+                resultElement.style.backgroundColor = '#eb5e28';
+                resultElement.style.color = '#FFFFFF';
+
+                document.getElementById('result-container').style.display =
+                    'flex';
+                document.getElementById('new-draw-btn').style.display = 'block';
+                confetti();
+            }
+
+            function resetDraw() {
+                document.getElementById('overlay').style.display = 'none';
+                document.getElementById('result-container').style.display =
+                    'none';
+                document.getElementById('new-draw-btn').style.display = 'none';
+                document.getElementById('name-list').innerHTML = '';
+                names = [];
+            }
+        </script>
+    </body>
+</html>
